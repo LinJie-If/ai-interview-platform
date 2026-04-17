@@ -83,9 +83,10 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const res = await getInterviewList()
-    interviews.value = (res.data ?? []).sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    const list = await getInterviewList()
+    interviews.value = [...list].sort(
+      (a: Interview, b: Interview) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )
   } catch {
     // silently handle

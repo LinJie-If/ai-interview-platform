@@ -1,20 +1,25 @@
-import request from './request'
-import type { ApiResult, Resume } from '../types'
+import { del, get, post } from './request'
+import type { Resume } from '../types'
 
-export function uploadResume(file: File): Promise<ApiResult<Resume>> {
+export async function uploadResume(file: File): Promise<Resume> {
   const formData = new FormData()
   formData.append('file', file)
-  return request.post('/resume/upload', formData)
+
+  const res = await post<Resume>('/resume/upload', formData)
+  return res.data
 }
 
-export function getResumeList(): Promise<ApiResult<Resume[]>> {
-  return request.get('/resume/list')
+export async function getResumeList(): Promise<Resume[]> {
+  const res = await get<Resume[]>('/resume/list')
+  return res.data
 }
 
-export function getResumeById(id: number): Promise<ApiResult<Resume>> {
-  return request.get(`/resume/${id}`)
+export async function getResumeById(id: number): Promise<Resume> {
+  const res = await get<Resume>(`/resume/${id}`)
+  return res.data
 }
 
-export function deleteResume(id: number): Promise<ApiResult<void>> {
-  return request.delete(`/resume/${id}`)
+export async function deleteResume(id: number): Promise<void> {
+  const res = await del<void>(`/resume/${id}`)
+  return res.data
 }

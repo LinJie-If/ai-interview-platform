@@ -1,26 +1,42 @@
-import request from './request'
-import type { ApiResult, Interview } from '../types'
+import { del, get, post, put } from './request'
+import type { Interview } from '../types'
 
-export function createInterview(data: Partial<Interview>): Promise<ApiResult<Interview>> {
-  return request.post('/interview', data)
+
+// 创建面试
+export async function createInterview(data: Partial<Interview>): Promise<Interview> {
+  const res = await post<Interview>('/interview', data)
+  return res.data
 }
 
-export function getInterviewList(): Promise<ApiResult<Interview[]>> {
-  return request.get('/interview/list')
+// 获取面试列表
+export async function getInterviewList(): Promise<Interview[]> {
+  const res = await get<Interview[]>('/interview/list')
+  return res.data
 }
 
-export function getInterviewsByResumeId(resumeId: number): Promise<ApiResult<Interview[]>> {
-  return request.get(`/interview/resume/${resumeId}`)
+// 获取面试列表
+export async function getInterviewsByResumeId(resumeId: number): Promise<Interview[]> {
+  const res = await get<Interview[]>(`/interview/resume/${resumeId}`)
+  return res.data
 }
 
-export function getInterviewById(id: number): Promise<ApiResult<Interview>> {
-  return request.get(`/interview/${id}`)
+// 获取面试详情
+export async function getInterviewById(id: number): Promise<Interview> {
+  const res = await get<Interview>(`/interview/${id}`)
+  return res.data
 }
 
-export function updateInterview(id: number, data: Partial<Interview>): Promise<ApiResult<Interview>> {
-  return request.put(`/interview/${id}`, data)
+// 更新面试
+export async function updateInterview(
+  id: number,
+  data: Partial<Interview>,
+): Promise<Interview> {
+  const res = await put<Interview>(`/interview/${id}`, data)
+  return res.data
 }
 
-export function deleteInterview(id: number): Promise<ApiResult<void>> {
-  return request.delete(`/interview/${id}`)
+// 删除面试
+export async function deleteInterview(id: number): Promise<void> {
+  const res = await del<void>(`/interview/${id}`)
+  return res.data
 }

@@ -75,7 +75,8 @@
       <!-- 知识库 -->
       <div class="nav-section">
         <div class="nav-section-label">知识库</div>
-        <RouterLink to="/knowledge" class="nav-item" active-class="nav-item--active">
+        <!-- <RouterLink to="/knowledge" class="nav-item" active-class="nav-item--active"> -->
+          <div class="nav-item" active-class="nav-item--active">
           <div class="nav-item-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
@@ -89,9 +90,11 @@
           <svg class="nav-item-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="9 18 15 12 9 6"/>
           </svg>
-        </RouterLink>
+        <!-- </RouterLink> -->
+          </div>
 
-        <RouterLink to="/qa" class="nav-item" active-class="nav-item--active">
+        <!-- <RouterLink to="/qa" class="nav-item" active-class="nav-item--active"> -->
+          <div class="nav-item" active-class="nav-item--active">
           <div class="nav-item-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
@@ -104,7 +107,8 @@
           <svg class="nav-item-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="9 18 15 12 9 6"/>
           </svg>
-        </RouterLink>
+        <!-- </RouterLink> -->
+          </div>
       </div>
     </aside>
 
