@@ -20,12 +20,6 @@ export interface Interview {
   createdAt: string
 }
 
-// ApiResult：API 结果
-export interface ApiResult<T> {
-  code: number
-  message: string
-  data: T
-}
 
 // ChatMessage：聊天消息
 export interface ChatMessage {

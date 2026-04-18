@@ -208,10 +208,11 @@ const phaseText = computed(() => {
 
 onMounted(async () => {
   const resumeId = Number(route.params.resumeId)
+
   if (resumeId) {
     try {
-      const res = await getResumeById(resumeId)
-      resume.value = res.data
+      const resumeDetail = await getResumeById(resumeId)
+      resume.value = resumeDetail
     } catch { /* ignore */ }
   }
 })
@@ -223,12 +224,12 @@ onUnmounted(() => {
 async function beginInterview() {
   const resumeId = Number(route.params.resumeId)
   try {
-    const res = await createInterview({
+    const createdInterview = await createInterview({
       resumeId,
       position: position.value || '综合面试',
       status: 'IN_PROGRESS',
     })
-    interview.value = res.data
+     interview.value = createdInterview
   } catch {
     // even if API fails, proceed with mock interview
     interview.value = {

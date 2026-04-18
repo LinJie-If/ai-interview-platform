@@ -87,9 +87,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { uploadResume } from '../../api/resume'
+//test
+import { getHealth } from '../../api/common'
 
 const router = useRouter()
 const fileInputRef = ref<HTMLInputElement | null>(null)
@@ -100,6 +102,16 @@ const errorMsg = ref('')
 
 const ALLOWED_TYPES = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'text/plain']
 const MAX_SIZE = 10 * 1024 * 1024
+
+//test
+// onMounted(async () => {
+//   try {
+//     const health = await getHealth()
+//     console.log('health check:', health)
+//   } catch (error) {
+//     console.error('health check failed:', error)
+//   }
+// })
 
 function triggerFileInput() {
   fileInputRef.value?.click()
@@ -160,14 +172,18 @@ async function handleUpload() {
   isUploading.value = true
   errorMsg.value = ''
   try {
-    const res = await uploadResume(selectedFile.value)
-    if (res.data?.id) {
-      router.push(`/resumes/${res.data.id}`)
+    const resume = await uploadResume(selectedFile.value)
+    if (resume.id) {
+      router.push(`/resumes/${resume.id}`)
     } else {
       router.push('/resumes')
     }
-  } catch (e: any) {
-    errorMsg.value = e?.message || '上传失败，请稍后重试'
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      errorMsg.value = e.message
+    } else {
+      errorMsg.value = '上传失败，请稍后重试'
+    }
   } finally {
     isUploading.value = false
   }

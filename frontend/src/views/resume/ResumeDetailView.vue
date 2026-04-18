@@ -132,12 +132,12 @@ onMounted(async () => {
     return
   }
   try {
-    const [resumeRes, interviewRes] = await Promise.all([
+    const [resumeDetail, interviewList] = await Promise.all([
       getResumeById(id),
       getInterviewsByResumeId(id),
     ])
-    resume.value = resumeRes.data
-    interviews.value = interviewRes.data ?? []
+    resume.value = resumeDetail
+    interviews.value = interviewList
   } catch {
     // silently handle
   } finally {

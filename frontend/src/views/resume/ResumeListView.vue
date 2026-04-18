@@ -74,8 +74,8 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const res = await getResumeList()
-    resumes.value = res.data ?? []
+    const list = await getResumeList()
+    resumes.value = list ?? []
   } catch {
     // silently handle
   } finally {
