@@ -1,17 +1,20 @@
 package modules.resume.service;
 
-import modules.resume.dto.ResumeDTO;
+import modules.resume.dto.ResumeDetailDTO;
+import modules.resume.dto.ResumeListItemDTO;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface ResumeService {
 
-    ResumeDTO uploadResume(MultipartFile file);
+    ResumeDetailDTO uploadResume(MultipartFile file);
 
-    List<ResumeDTO> listResumes();
+    List<ResumeListItemDTO> listResumes();
 
-    ResumeDTO getResumeById(Long id);
+    ResumeDetailDTO getResumeById(Long id);
 
     void deleteResume(Long id);
+
 }

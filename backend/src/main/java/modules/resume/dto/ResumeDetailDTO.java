@@ -1,83 +1,34 @@
-package modules.resume.entity;
-
-import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
+package modules.resume.dto;
 
 import java.time.LocalDateTime;
 
-// ResumeEntity 定义了 resumes 主表映射。
-@Entity
-@Table(name = "resumes", indexes = {
-        @Index(name = "idx_resume_file_hash", columnList = "file_hash")
-})
-public class ResumeEntity {
+import modules.resume.entity.ResumeAnalyzeStatus;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ResumeDetailDTO {
+
     private Long id;
 
-    @Column(name = "file_hash", nullable = false, unique = true, length = 128)
     private String fileHash;
 
-    @Column(name = "original_filename", nullable = false, length = 255)
     private String originalFilename;
 
-    @Column(name = "file_size", nullable = false)
     private Long fileSize;
 
-    @Column(name = "content_type", length = 100)
     private String contentType;
 
-    @Column(name = "storage_key", length = 255)
     private String storageKey;
 
-    @Lob
-    @Column(name = "resume_text", columnDefinition = "TEXT")
     private String resumeText;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "analyze_status", nullable = false, length = 32)
     private ResumeAnalyzeStatus analyzeStatus;
 
-    @Lob
-    @Column(name = "analyze_error", columnDefinition = "TEXT")
     private String analyzeError;
 
-    @Column(name = "uploaded_at", nullable = false)
     private LocalDateTime uploadedAt;
 
-    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ResumeAnalysisEntity> analyses = new ArrayList<>();
-
-    //
-
-    @PrePersist
-    public void prePersist() {
-        LocalDateTime now = LocalDateTime.now();
-
-        if (uploadedAt == null) {
-            uploadedAt = now;
-        }
-
-        if (updatedAt == null) {
-            updatedAt = now;
-        }
-
-        if (analyzeStatus == null) {
-            analyzeStatus = ResumeAnalyzeStatus.UPLOADED;
-        }
-    }
-
-    //
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+    private ResumeAnalysisDTO latestAnalysis;
 
     public Long getId() {
         return id;
@@ -167,12 +118,85 @@ public class ResumeEntity {
         this.updatedAt = updatedAt;
     }
 
-    public List<ResumeAnalysisEntity> getAnalyses() {
-        return analyses;
+    public ResumeAnalysisDTO getLatestAnalysis() {
+        return latestAnalysis;
     }
 
-    public void setAnalyses(List<ResumeAnalysisEntity> analyses) {
-        this.analyses = analyses;
+    public void setLatestAnalysis(ResumeAnalysisDTO latestAnalysis) {
+        this.latestAnalysis = latestAnalysis;
+    }
+
+    public static class ResumeAnalysisDTO {
+
+        private Long id;
+
+        private Integer overallScore;
+
+        private String summary;
+
+        private String scoreBreakdownJson;
+
+        private String strengthsJson;
+
+        private String suggestionsJson;
+
+        private LocalDateTime analyzedAt;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public Integer getOverallScore() {
+            return overallScore;
+        }
+
+        public void setOverallScore(Integer overallScore) {
+            this.overallScore = overallScore;
+        }
+
+        public String getSummary() {
+            return summary;
+        }
+
+        public void setSummary(String summary) {
+            this.summary = summary;
+        }
+
+        public String getScoreBreakdownJson() {
+            return scoreBreakdownJson;
+        }
+
+        public void setScoreBreakdownJson(String scoreBreakdownJson) {
+            this.scoreBreakdownJson = scoreBreakdownJson;
+        }
+
+        public String getStrengthsJson() {
+            return strengthsJson;
+        }
+
+        public void setStrengthsJson(String strengthsJson) {
+            this.strengthsJson = strengthsJson;
+        }
+
+        public String getSuggestionsJson() {
+            return suggestionsJson;
+        }
+
+        public void setSuggestionsJson(String suggestionsJson) {
+            this.suggestionsJson = suggestionsJson;
+        }
+
+        public LocalDateTime getAnalyzedAt() {
+            return analyzedAt;
+        }
+
+        public void setAnalyzedAt(LocalDateTime analyzedAt) {
+            this.analyzedAt = analyzedAt;
+        }
     }
 
 }
